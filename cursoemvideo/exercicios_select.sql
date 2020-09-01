@@ -1,4 +1,4 @@
--- *****EXERCÍCIOS*****
+-- ***************EXERCÍCIOS***************
 
 -- 1 Lista com o nome de todas as gafonhotas
 
@@ -39,3 +39,39 @@ SELECT MIN(PESO) FROM GAFANHOTOS WHERE SEXO = 'F' AND NACIONALIDADE <> 'BRASIL' 
 -- 9 Quantas gafanhotos mulheres tem mais de 1.90m de altura?
 
 SELECT COUNT(ALTURA) FROM GAFANHOTOS WHERE SEXO = 'F' AND ALTURA > '1.90';
+
+-- ***************EXERCÍCIOS 2***************
+
+-- 1 Lista com as profissões dos gafanhotos e seus respectivos quantitativos
+
+SELECT PROFISSAO FROM gafanhotos ORDER BY profissao;
+
+SELECT PROFISSAO, COUNT(NOME) FROM GAFANHOTOS
+GROUP BY PROFISSAO; 
+
+-- 2 Quantos gafanhotos homens e quantas mulheres nasceram após 1/1/2005?
+
+SELECT NASCIMENTO, SEXO FROM gafanhotos ORDER BY NASCIMENTO;
+
+SELECT SEXO, COUNT(NOME) FROM GAFANHOTOS
+WHERE NASCIMENTO > '2005-1-1'
+GROUP BY SEXO;
+
+-- 3 Lista com os gafanhotos que nasceram fora do Brasil, mostrando o país de origem e o total de pessoas nascidas lá
+-- Só nos interessam os países que tiverem mais de 3 gafanhotos com essa nacionalidade
+
+SELECT NACIONALIDADE, COUNT(NOME) FROM GAFANHOTOS
+WHERE NACIONALIDADE <> 'Brasil'
+GROUP BY NACIONALIDADE
+HAVING COUNT(NOME) > 3
+ORDER BY NACIONALIDADE;
+
+-- 4 Uma lista agrupada pela altura dos gafanhotos, mostrando quantas pessoas pesam acima de 100kg
+-- e que estão acima da media de altura de todos os cadastrados
+
+SELECT AVG(ALTURA) FROM GAFANHOTOS;
+
+SELECT ALTURA FROM GAFANHOTOS 
+WHERE PESO > '100.00'
+GROUP BY ALTURA
+HAVING ALTURA > (SELECT AVG(ALTURA) FROM GAFANHOTOS);
